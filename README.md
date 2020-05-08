@@ -2,7 +2,7 @@
 
 Do you need to convert your JS to strictly uppercase or lowercase? No problem. This is a web app that converts it for you.
 
-https://arinerron.github.io/case-insensitive-xss/
+https://arinerron.github.io/case-insensitive-xss/index.html
 
 ## How does it work?
 
