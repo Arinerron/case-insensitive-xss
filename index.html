@@ -69,10 +69,26 @@
                 uppercase = document.getElementById('mode').value === 'CONVERT TO UPPERCASE';
 
                 var encode = function(s, upper) {
-                    var regex = (upper ? /[!'()*a-z]/g : /[!'()*A-Z]/g);
-                    return encodeURIComponent(s).replace(regex, (c) => {
-                        return '%'+c.charCodeAt(0).toString(16)
-                    })
+                    if (upper) {
+                        var regex = /[^A-Z0-9]/g;
+                    } else {
+                        var regex = /[^a-z0-9]/g;
+                    }
+                    
+                    s = s.replace(regex, (c) => {
+                        var encoded = c.charCodeAt(0).toString(16);
+                        if (encoded.length == 1) {
+                            encoded = '0' + encoded;
+                        }
+                        
+                        return '%' + encoded;
+                    });
+                    
+                    if (upper) {
+                        return s.toUpperCase();
+                    } else {
+                        return s.toLowerCase();
+                    }
                 }
 
                 var createPayload = function(js) {
@@ -80,13 +96,6 @@
                 }
 
                 var payload = createPayload(code || input.value);
-
-                if (uppercase) {
-                    payload = payload.toUpperCase();
-                } else {
-                    payload = payload.toLowerCase();
-                }
-
                 output.append(payload);
             }
 
